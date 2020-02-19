@@ -1,6 +1,6 @@
-extern crate sha2;
+extern crate sha2ni;
 
-use sha2::{Sha512, Digest};
+use sha2ni::{Digest, Sha512};
 use std::env;
 use std::fs;
 use std::io::{self, Read};

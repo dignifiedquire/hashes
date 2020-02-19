@@ -21,9 +21,9 @@
 //!
 //! ```rust
 //! # #[macro_use] extern crate hex_literal;
-//! # extern crate sha2;
+//! # extern crate sha2ni;
 //! # fn main() {
-//! use sha2::{Sha256, Sha512, Digest};
+//! use sha2ni::{Sha256, Sha512, Digest};
 //!
 //! // create a Sha256 object
 //! let mut hasher = Sha256::new();

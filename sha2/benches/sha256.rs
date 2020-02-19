@@ -2,6 +2,6 @@
 #![feature(test)]
 #[macro_use]
 extern crate digest;
-extern crate sha2;
+extern crate sha2ni;
 
-bench!(sha2::Sha256);
+bench!(sha2ni::Sha256);

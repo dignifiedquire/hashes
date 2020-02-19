@@ -1,5 +1,5 @@
 [package]
-name = "sha2"
+name = "sha2ni"
 version = "0.8.1"
 authors = ["RustCrypto Developers"]
 license = "MIT OR Apache-2.0"
