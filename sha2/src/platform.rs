@@ -47,13 +47,6 @@ impl Implementation {
             .map(|info| info.has_sha())
             .unwrap_or_default();
 
-        #[cfg(target_feature = "sha")]
-        {
-            if !is_runtime_ok {
-                println!("WARN: sha-ni not available, falling back");
-            }
-        }
-
         // Make sure this computer actually supports it
         if is_runtime_ok {
             return Some(Implementation(Platform::Sha));
