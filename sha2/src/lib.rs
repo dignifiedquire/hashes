@@ -88,6 +88,7 @@ extern crate opaque_debug;
 pub extern crate digest;
 #[cfg(feature = "asm-aarch64")]
 extern crate libc;
+extern crate raw_cpuid;
 #[cfg(feature = "asm")]
 extern crate sha2_asm;
 #[cfg(feature = "std")]
