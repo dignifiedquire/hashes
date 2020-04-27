@@ -20,7 +20,7 @@ impl Implementation {
                 return sha_impl;
             }
         }
-        #[cfg(feature = "asm")]
+        #[cfg(any(feature = "asm", feature = "asm-aarch64"))]
         {
             if let Some(asm_impl) = Self::asm_if_supported() {
                 return asm_impl;
@@ -55,9 +55,17 @@ impl Implementation {
         None
     }
 
-    #[cfg(feature = "asm")]
+    #[cfg(any(feature = "asm", feature = "asm-arch64"))]
     pub fn asm_if_supported() -> Option<Self> {
-        return Some(Implementation(Platform::Asm));
+        #[cfg(feature = "asm-aarch64")]
+        let supported = ::aarch64::sha2_supported();
+        #[cfg(not(feature = "asm-aarch64"))]
+        let supported = false;
+
+        if supported {
+            return Some(Implementation(Platform::Asm));
+        }
+        None
     }
 
     #[inline]
