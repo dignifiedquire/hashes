@@ -196,6 +196,9 @@ fn sha1_compress(state: &mut [u32; 5], block: &[u8; 64]) {
 
     unsafe {
         asm!(
+            // store registers
+            "movq    %rbx, %xmm0",
+            "movq    %rbp, %xmm1",
             // allocate scratch space
             "subq    $64, %rsp",
 
@@ -294,9 +297,30 @@ fn sha1_compress(state: &mut [u32; 5], block: &[u8; 64]) {
             round3!("%ecx", "%edx", "%ebp", "%eax", "%ebx", 78),
             round3!("%ebx", "%ecx", "%edx", "%ebp", "%eax", 79),
 
+            // Save updated state
+            "addl    %eax,  0(%r8)",
+            "addl    %ebx,  4(%r8)",
+            "addl    %ecx,  8(%r8)",
+            "addl    %edx, 12(%r8)",
+            "addl    %ebp, 16(%r8)",
+
+            // Restore registers
+            "movq    %xmm0, %rbx",
+            "movq    %xmm1, %rbp",
+            "addq    $64, %rsp",
+
             // Arguments
-            in("rsi") block.as_ptr(),
             in("rdi") state.as_mut_ptr(),
+            in("rsi") block.as_ptr(),
+
+            // Clobber
+            out("eax") _,
+            // out("ebx") _, Manually stored with xmm1
+            out("ecx") _,
+            out("edx") _,
+            // out("ebp") _, Manually stored with xmm0
+            out("xmm0") _,
+            out("xmm1") _,
 
             options(att_syntax)
         );

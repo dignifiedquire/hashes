@@ -16,6 +16,7 @@ cfg_if::cfg_if! {
         mod x86;
         use x86::compress as compress_inner;
     } else if #[cfg(target_arch = "x86_64")] {
+        // TODO: add back sha1ni usage
         mod x64_asm;
         use x64_asm::compress as compress_inner;
     } else {
