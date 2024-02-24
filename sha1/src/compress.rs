@@ -11,10 +11,13 @@ cfg_if::cfg_if! {
     } else if #[cfg(target_arch = "loongarch64")] {
         mod loongarch64_asm;
         use loongarch64_asm::compress as compress_inner;
-    } else if #[cfg(any(target_arch = "x86", target_arch = "x86_64"))] {
+    } else if #[cfg(target_arch = "x86")] {
         mod soft;
         mod x86;
         use x86::compress as compress_inner;
+    } else if #[cfg(target_arch = "x86_64")] {
+        mod x64_asm;
+        use x64_asm::compress as compress_inner;
     } else {
         mod soft;
         use soft::compress as compress_inner;
