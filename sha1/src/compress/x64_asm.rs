@@ -203,12 +203,12 @@ fn sha1_compress(state: &mut [u32; 5], block: &[u8; 64]) {
             "subq    $64, %rsp",
 
             // Load arguments
-            "movq    %rdi, %r8",      // state (read only)
-            "movl     0(%rdi), %eax", // a
-            "movl     4(%rdi), %ebx", // b
-            "movl     8(%rdi), %ecx", // c
-            "movl    12(%rdi), %edx", // d
-            "movl    16(%rdi), %ebp", // e
+            "movq    %rdi, %r8",      // state backup
+            "movl     0(%rdi), %eax", // a = state[0]
+            "movl     4(%rdi), %ebx", // b = state[1]
+            "movl     8(%rdi), %ecx", // c = state[2]
+            "movl    12(%rdi), %edx", // d = state[3]
+            "movl    16(%rdi), %ebp", // e = state[4]
             "movq    %rsi, %rdi",     // block
 
             // Rounds 1..80
